@@ -1,0 +1,22 @@
+class Solution 
+{
+public:
+    int knapSack(int W, vector<int>& wt, vector<int>& val) 
+    {
+        int n = wt.size();
+        vector<int> prev(W + 1, 0), curr(W + 1, 0);
+        
+        for (int i = 0; i < n; i++) {
+            for (int w = 0; w <= W; w++) {
+                int notTake = prev[w];
+                int take = 0;
+                if (wt[i] <= w)
+                    take = val[i] + prev[w - wt[i]];
+                curr[w] = max(take, notTake);
+            }
+            prev = curr;
+        }
+        
+        return prev[W];
+    }
+};
